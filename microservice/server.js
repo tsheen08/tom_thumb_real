@@ -12,21 +12,22 @@ app.use(express.json())
 app.get('/', (req, res) => {
     
     str = req.query.please
-    in_str = str.replace(/,/g, " ")
+    in_str = str.replace(/,/g, '\t')
     in_str2 = in_str.replace(/\\n/g, '\n')
     console.log(in_str)
-    require('fs').writeFileSync('outfile.tsv', in_str2)
+    res.send(in_str2)
+    // require('fs').writeFileSync('outfile.tsv', in_str2)
 
-    var options = {root: path.join(__dirname)}
-    var fileName = './outfile.tsv'
+    // var options = {root: path.join(__dirname)}
+    // var fileName = './outfile.tsv'
 
-    res.sendFile(fileName, options, function(err){
-        if (err){
-            console.log('error:', err)
-        } else {
-            console.log('Sent:', fileName)
-        }
-    })
+    // res.sendFile(fileName, options, function(err){
+    //     if (err){
+    //         console.log('error:', err)
+    //     } else {
+    //         console.log('Sent:', fileName)
+    //     }
+    // })
 })
 
 app.listen(port, () => {
