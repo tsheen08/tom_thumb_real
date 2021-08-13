@@ -4,32 +4,31 @@ const port = 3000
 var fs = require('fs')
 http = require('http')
 var path = require('path')
-const { nextTick } = require('process')
+//const { nextTick, allowedNodeEnvironmentFlags } = require('process')
+
+app.use(express.urlencoded({extended: true}))
+app.use(express.json()) 
 
 app.get('/', (req, res) => {
-    res.send('GET request')
+    
+    str = req.query.please
+    in_str = str.replace(/,/g, " ")
+    in_str2 = in_str.replace(/\\n/g, '\n')
+    console.log(in_str)
+    require('fs').writeFileSync('outfile.tsv', in_str2)
+
+    var options = {root: path.join(__dirname)}
+    var fileName = './outfile.tsv'
+
+    res.sendFile(fileName, options, function(err){
+        if (err){
+            console.log('error:', err)
+        } else {
+            console.log('Sent:', fileName)
+        }
+    })
 })
 
 app.listen(port, () => {
     console.log(`listening on at http://localhost:${port}`)
 })
-
-app.post('/', callpyconverter);
-
-function callpyconverter( req, res ) {
-    var spawn = require("child_process").spawn;
-    var process = spawn('python', ["./converter.py", req.body]);
-
-    var options = {root: path.join(__dirname)}
-    var fileName = './output.tsv'
-  
-    setTimeout(function(){
-        res.sendFile(fileName, options, function(err){
-            if (err){
-                console.log('error:', err)
-            } else {
-                console.log('Sent:', fileName)
-            }
-        })
-    },3000)
-}
