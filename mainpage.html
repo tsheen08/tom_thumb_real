@@ -10,9 +10,13 @@
         <p><a href="browse.html">Browse Plants</a></p>
         <p><a href="myGarden.html">My Garden</a></p>
 
-        <form action="http://flip1.engr.oregonstate.edu:3468/" method='get'>
-            <label for 
-        </form>
+        <p>Enter your zip code to find what Plant Hardiness Zone you're in.<br>
+        We'll make the care page more relevant to your area.</p>
+
+        <div id=zone>zone here</div>
+
+        <input id="userZip" type="text" placeholder="Enter Zip Code">
+        <button onclick="zoneFind()">Submit</button>
 
         <div class="slideshow-container">
             <div class="gardenTips">

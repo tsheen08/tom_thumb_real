@@ -9,6 +9,26 @@ function addToGarden(){
 var slideIndex = 0;
 showSlides();
 
+function zoneFind(event){
+  let input = document.getElementById("userZip").value
+  document.getElementById('zone').innerHTML = input
+  
+
+  var req = new XMLHttpRequest()
+  req.open("GET", "http://flip1.engr.oregonstate.edu:3469/" + input, false)
+  req.send(null)
+  var hZone = JSON.parse(req.responseText)
+  
+  test(hZone.zone)
+
+  event.preventDefault();
+
+}
+
+function test(zone){
+  document.getElementById('zone').innerHTML = zone
+}
+
 function showSlides() {
   var i;
   var slides = document.getElementsByClassName("gardenTips");
